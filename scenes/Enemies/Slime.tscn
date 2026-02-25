@@ -5,6 +5,13 @@
 
 [node name="Player" type="Node2D" unique_id=515889676]
 script = ExtResource("1_a67r8")
+Health = 8
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1317937094]
 texture = ExtResource("2_a67r8")
+centered = false
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1178716777]
+offset_right = 4.0
+offset_bottom = 27.0
+show_percentage = false

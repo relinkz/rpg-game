@@ -12,6 +12,7 @@ public partial class Actor : Node2D
 
 	private Vector2 originalPosition;
 	private Tween _idleTween;
+	private ProgressBar _healthBar;
 
 	bool myTurn = false;
 
@@ -22,6 +23,19 @@ public partial class Actor : Node2D
 	public override void _Ready()
 	{
 		originalPosition = Position;
+
+		// Get the sprite and set progress bar width to match
+		var sprite = GetNode<Sprite2D>("Sprite2D");
+		_healthBar = GetNode<ProgressBar>("ProgressBar");
+
+		if (sprite != null && sprite.Texture != null && _healthBar != null)
+		{
+			float spriteWidth = sprite.Texture.GetWidth();
+			_healthBar.CustomMinimumSize = new Vector2(spriteWidth, _healthBar.CustomMinimumSize.Y);
+			_healthBar.MaxValue = Health;
+			_healthBar.Value = Health;
+			UpdateHealthBarColor();
+		}
 	}
 
 	public override void _Process(double delta)
@@ -54,43 +68,69 @@ public partial class Actor : Node2D
 	public void TakeDamage(int damage)
 	{
 		Health -= damage;
+		_healthBar.Value = Health;
+		UpdateHealthBarColor();
 		GD.Print($"{Name} takes {damage} damage! Remaining health: {Health}");
 		if (Health <= 0)
 		{
 			GD.Print($"{Name} has been defeated!");
 			QueueFree();
 		}
+
+	}
+
+	private void UpdateHealthBarColor()
+	{
+		if (_healthBar == null) return;
+
+		float healthPercent = (float)Health / (float)_healthBar.MaxValue * 100f;
+		Color barColor;
+
+		if (healthPercent > 60f)
+		{
+			barColor = new Color(0.2f, 0.8f, 0.2f);  // Green
+		}
+		else if (healthPercent > 20f)
+		{
+			barColor = new Color(0.8f, 0.8f, 0.2f);  // Yellow
+		}
+		else
+		{
+			barColor = new Color(0.8f, 0.2f, 0.2f);  // Red
+		}
+
+		_healthBar.Modulate = barColor;
 	}
 
 	public virtual void OnTurnStart()
 	{
 		myTurn = true;
 
-		// Start idle rotation animation
+		// Start idle swaying animation
 		_idleTween = CreateTween();
 		_idleTween.SetTrans(Tween.TransitionType.Sine);
 		_idleTween.SetLoops();  // Loop continuously
 
-		float rotationAmount = 0.15f;  // Radians (~8.6 degrees)
-		float rotationSpeed = 0.6f;    // Duration per rotation swing
+		float swayAmount = 10f;  // Pixels to move up/down
+		float swaySpeed = 0.8f;  // Duration per sway swing
 
-		// Rotate right
-		_idleTween.TweenProperty(this, "rotation", rotationAmount, rotationSpeed);
+		// Sway up
+		_idleTween.TweenProperty(this, "position:y", originalPosition.Y - swayAmount, swaySpeed);
 
-		// Rotate left
-		_idleTween.TweenProperty(this, "rotation", -rotationAmount, rotationSpeed);
+		// Sway down
+		_idleTween.TweenProperty(this, "position:y", originalPosition.Y + swayAmount, swaySpeed);
 	}
 
 	public virtual void EndTurn()
 	{
 		myTurn = false;
 
-		// Stop idle animation and reset rotation
+		// Stop idle animation and reset position
 		if (_idleTween != null)
 		{
 			_idleTween.Kill();
 		}
-		Rotation = 0f;
+		Position = originalPosition;
 
 		EmitSignal(SignalName.TurnEnded);
 	}
