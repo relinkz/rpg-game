@@ -12,7 +12,7 @@ public partial class Actor : Node2D
 
 	private Vector2 originalPosition;
 	private Tween _idleTween;
-	private ProgressBar _healthBar;
+	private HealthBar _healthBar;
 
 	bool myTurn = false;
 
@@ -24,17 +24,14 @@ public partial class Actor : Node2D
 	{
 		originalPosition = Position;
 
-		// Get the sprite and set progress bar width to match
+		// Initialize health bar
 		var sprite = GetNode<Sprite2D>("Sprite2D");
-		_healthBar = GetNode<ProgressBar>("ProgressBar");
+		_healthBar = new HealthBar();
+		AddChild(_healthBar);
 
-		if (sprite != null && sprite.Texture != null && _healthBar != null)
+		if (_healthBar != null && sprite != null)
 		{
-			float spriteWidth = sprite.Texture.GetWidth();
-			_healthBar.CustomMinimumSize = new Vector2(spriteWidth, _healthBar.CustomMinimumSize.Y);
-			_healthBar.MaxValue = Health;
-			_healthBar.Value = Health;
-			UpdateHealthBarColor();
+			_healthBar.Initialize(Health, sprite);
 		}
 	}
 
@@ -68,8 +65,7 @@ public partial class Actor : Node2D
 	public void TakeDamage(int damage)
 	{
 		Health -= damage;
-		_healthBar.Value = Health;
-		UpdateHealthBarColor();
+		_healthBar?.UpdateHealth(Health);
 		GD.Print($"{Name} takes {damage} damage! Remaining health: {Health}");
 		if (Health <= 0)
 		{
@@ -79,28 +75,6 @@ public partial class Actor : Node2D
 
 	}
 
-	private void UpdateHealthBarColor()
-	{
-		if (_healthBar == null) return;
-
-		float healthPercent = (float)Health / (float)_healthBar.MaxValue * 100f;
-		Color barColor;
-
-		if (healthPercent > 60f)
-		{
-			barColor = new Color(0.2f, 0.8f, 0.2f);  // Green
-		}
-		else if (healthPercent > 20f)
-		{
-			barColor = new Color(0.8f, 0.8f, 0.2f);  // Yellow
-		}
-		else
-		{
-			barColor = new Color(0.8f, 0.2f, 0.2f);  // Red
-		}
-
-		_healthBar.Modulate = barColor;
-	}
 
 	public virtual void OnTurnStart()
 	{
