@@ -7,6 +7,11 @@ public partial class Player : Actor
     [Export]
     public string PlayerClass { get; set; } = "Rogue";
 
+    public override void _Ready()
+    {
+        base._Ready();
+        AddToGroup("Player");
+    }
     public override void OnTurnStart()
     {
         base.OnTurnStart();
