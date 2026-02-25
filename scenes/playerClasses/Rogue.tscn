@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dv1ig2qvtvx5a"]
+
+[ext_resource type="Script" uid="uid://bg4o3hrt461ds" path="res://scripts/Player.cs" id="1_clf32"]
+[ext_resource type="Texture2D" uid="uid://dxmipm2gd6jmo" path="res://images/dagger.png" id="2_tfmtp"]
+
+[node name="player_rogue" type="Node2D" unique_id=515889676]
+script = ExtResource("1_clf32")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1317937094]
+texture = ExtResource("2_tfmtp")

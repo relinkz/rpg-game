@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cqmirce18bcvb"]
+
+[ext_resource type="Script" uid="uid://wnfilwhuj6l1" path="res://scripts/GameHandler.cs" id="1_gubc5"]
+[ext_resource type="Script" uid="uid://dob1f70avt45h" path="res://scripts/TurnHandler.cs" id="2_rt2n2"]
+[ext_resource type="PackedScene" uid="uid://dv1ig2qvtvx5a" path="res://scenes/playerClasses/Rogue.tscn" id="3_c16ls"]
+[ext_resource type="PackedScene" uid="uid://efw8spa15ubr" path="res://scenes/Enemies/Slime.tscn" id="4_18nlu"]
+[ext_resource type="PackedScene" uid="uid://cdxkd80kjalsv" path="res://scenes/UI.tscn" id="5_c1pb6"]
+
+[node name="BattleScene" type="Node2D" unique_id=992927828]
+script = ExtResource("1_gubc5")
+
+[node name="TurnHandler" type="Node" parent="." unique_id=805638638]
+script = ExtResource("2_rt2n2")
+
+[node name="player_rogue" parent="TurnHandler" unique_id=515889676 instance=ExtResource("3_c16ls")]
+position = Vector2(297, 389)
+scale = Vector2(0.5, 0.5)
+
+[node name="enemy_slime" parent="TurnHandler" unique_id=1308116224 instance=ExtResource("4_18nlu")]
+position = Vector2(1444, 395)
+scale = Vector2(0.5, 0.5)
+Initiative = 5
+basePhysicalDamage = PackedInt32Array(1, 4)
+
+[node name="Control" parent="." unique_id=1414187168 instance=ExtResource("5_c1pb6")]
