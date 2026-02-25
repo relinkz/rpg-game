@@ -1,5 +1,5 @@
 using Godot;
-
+using System;
 using System.Collections.Generic;
 public partial class TurnHandler : Node
 {
@@ -8,28 +8,16 @@ public partial class TurnHandler : Node
 
 	private bool _activeCombat = false;
 	private int _roundCounter = 0;
-	// TurnHandler.cs
-	private Label _roundLabel;
 
-	private Button _attackButton;
-	private Button _defendButton;
-	private Button _endTurnButton;
+	private ActionBar _actionBar;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		_turnQueue = new Queue<Actor>();
-		_roundLabel = GetNode<Label>("../Control/TurnLabel");
 
-		// Get button references
-		_attackButton = GetNode<Button>("../Control/ActionBar/BasicAbilities/Attack");
-		_defendButton = GetNode<Button>("../Control/ActionBar/BasicAbilities/Defend");
-		_endTurnButton = GetNode<Button>("../Control/ActionBar/BasicAbilities/EndTurn");
 
-		// Connect button signals
-		_attackButton.Pressed += OnAttackPressed;
-		_defendButton.Pressed += OnDefendPressed;
-		_endTurnButton.Pressed += OnEndTurnPressed;
+		_actionBar = GetNode<ActionBar>("../TurnHandler/ActionBar");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -97,7 +85,6 @@ public partial class TurnHandler : Node
 		}
 
 		GD.Print($"Round {_roundCounter++}");
-		_roundLabel.Text = $"Round {_roundCounter}";
 
 	}
 
@@ -112,6 +99,8 @@ public partial class TurnHandler : Node
 		_currentEntity.TurnEnded += OnActorTurnEnded;
 		_currentEntity.OnTurnStart();
 		GD.Print($"{_currentEntity.Name}'s turn!");
+		if (_currentEntity is Player)
+			_actionBar.SetCharacter((Player)_currentEntity);
 	}
 
 	private void OnActorTurnEnded()

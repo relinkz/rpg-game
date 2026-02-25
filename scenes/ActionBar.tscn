@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bhh87dagjnxbl"]
+
+[ext_resource type="Script" uid="uid://bvly0hf0sapxq" path="res://scripts/ActionBar.cs" id="1_gktoc"]
+[ext_resource type="PackedScene" uid="uid://cguqwkxdol4pe" path="res://scenes/AbilityButton.tscn" id="2_3c0xp"]
+
+[node name="ActionBar" type="Control" unique_id=1943839177]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_gktoc")
+AbilityButtonScene = ExtResource("2_3c0xp")
+
+[node name="Panel" type="Panel" parent="." unique_id=154073025]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=2090358409]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer" unique_id=1140234551]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2

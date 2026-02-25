@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://c7jdrle042ene"]
+
+[ext_resource type="Texture2D" uid="uid://cmejn57tlcdxb" path="res://images/UI/stab.png" id="1_f0shw"]
+[ext_resource type="Script" uid="uid://bcx38yy83rwfd" path="res://scripts/AbilityData.cs" id="2_pihuk"]
+
+[resource]
+script = ExtResource("2_pihuk")
+Name = "Stab"
+Icon = ExtResource("1_f0shw")

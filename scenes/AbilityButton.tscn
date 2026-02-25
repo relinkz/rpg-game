@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cguqwkxdol4pe"]
+
+[ext_resource type="Script" uid="uid://sdrx77r24ibg" path="res://scripts/AbilityButton.cs" id="1_6ptsa"]
+
+[node name="AbilityButton" type="Button" unique_id=2052163697]
+script = ExtResource("1_6ptsa")
