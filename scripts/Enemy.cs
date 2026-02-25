@@ -25,10 +25,7 @@ public partial class Enemy : Actor
         var target = GetTree().GetFirstNodeInGroup("Player") as Player;
         if (target != null)
         {
-            Dice dice = new Dice();
-            int damage = dice.Roll(basePhysicalDamage[0], basePhysicalDamage[1]);
-            GD.Print($"{Name} attacks {target.Name} for {damage} damage!");
-            target.TakeDamage(damage);
+            base.attack(target);
         }
 
         EndTurn();

@@ -10,9 +10,8 @@ public partial class Actor : Node2D
 	[Export]
 	public int[] basePhysicalDamage { get; set; } = { 1, 6 };
 
-	Vector2 activeOffset = new Vector2(0, -50);
-	Vector2 originalPosition;
-
+	private Vector2 originalPosition;
+	private Tween _idleTween;
 
 	bool myTurn = false;
 
@@ -27,21 +26,29 @@ public partial class Actor : Node2D
 
 	public override void _Process(double delta)
 	{
-		if (myTurn)
-		{
-			Position = originalPosition + activeOffset;
-		}
-		else
-		{
-			Position = originalPosition;
-		}
 	}
 
 	public void attack(Actor target)
 	{
 		var dice = new Dice();
 		int damage = dice.Roll(basePhysicalDamage[0], basePhysicalDamage[1]);
-		target.TakeDamage(damage);
+
+		// Create attack animation tween
+		var tween = CreateTween();
+		tween.SetTrans(Tween.TransitionType.Linear);
+
+		Vector2 targetPosition = target.Position;
+		float attackSpeed = 0.15f;  // Duration of lunge forward
+		float returnSpeed = 0.15f;  // Duration of bounce back
+
+		// Lunge toward target
+		tween.TweenProperty(this, "position", targetPosition, attackSpeed);
+
+		// Bounce back to original position
+		tween.TweenProperty(this, "position", originalPosition, returnSpeed);
+
+		// Deal damage after animation completes
+		tween.TweenCallback(Callable.From(() => target.TakeDamage(damage)));
 	}
 
 	public void TakeDamage(int damage)
@@ -58,11 +65,33 @@ public partial class Actor : Node2D
 	public virtual void OnTurnStart()
 	{
 		myTurn = true;
+
+		// Start idle rotation animation
+		_idleTween = CreateTween();
+		_idleTween.SetTrans(Tween.TransitionType.Sine);
+		_idleTween.SetLoops();  // Loop continuously
+
+		float rotationAmount = 0.15f;  // Radians (~8.6 degrees)
+		float rotationSpeed = 0.6f;    // Duration per rotation swing
+
+		// Rotate right
+		_idleTween.TweenProperty(this, "rotation", rotationAmount, rotationSpeed);
+
+		// Rotate left
+		_idleTween.TweenProperty(this, "rotation", -rotationAmount, rotationSpeed);
 	}
 
 	public virtual void EndTurn()
 	{
 		myTurn = false;
+
+		// Stop idle animation and reset rotation
+		if (_idleTween != null)
+		{
+			_idleTween.Kill();
+		}
+		Rotation = 0f;
+
 		EmitSignal(SignalName.TurnEnded);
 	}
 }
