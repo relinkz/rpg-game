@@ -2,15 +2,14 @@
 
 [ext_resource type="Script" uid="uid://bg4o3hrt461ds" path="res://scripts/Player.cs" id="1_clf32"]
 [ext_resource type="Script" uid="uid://bcx38yy83rwfd" path="res://scripts/AbilityData.cs" id="2_3tv31"]
-[ext_resource type="Texture2D" uid="uid://dxmipm2gd6jmo" path="res://images/dagger.png" id="2_tfmtp"]
 [ext_resource type="Resource" uid="uid://c7jdrle042ene" path="res://resources/abilities/stab.tres" id="3_q5qh6"]
 [ext_resource type="Resource" uid="uid://cn72e8yt6rrjp" path="res://resources/abilities/nimble.tres" id="4_00kp1"]
+[ext_resource type="Texture2D" uid="uid://cm2w5xhj0wsvk" path="res://images/128/dagger.png" id="5_q5qh6"]
 
 [node name="player_rogue" type="Node2D" unique_id=515889676]
-position = Vector2(1, -1)
 script = ExtResource("1_clf32")
 Health = 16
 Abilities = Array[ExtResource("2_3tv31")]([ExtResource("3_q5qh6"), ExtResource("4_00kp1")])
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1317937094]
-texture = ExtResource("2_tfmtp")
+texture = ExtResource("5_q5qh6")

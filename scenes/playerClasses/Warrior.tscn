@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://3l2vxkdgk60a"]
+
+[ext_resource type="Script" uid="uid://bg4o3hrt461ds" path="res://scripts/Player.cs" id="1_hw5gb"]
+[ext_resource type="Script" uid="uid://bcx38yy83rwfd" path="res://scripts/AbilityData.cs" id="2_sd31d"]
+[ext_resource type="Resource" uid="uid://c7jdrle042ene" path="res://resources/abilities/stab.tres" id="3_edkkl"]
+[ext_resource type="Texture2D" uid="uid://bmg24yyjcj8yb" path="res://images/128/axe.png" id="4_nryn0"]
+
+[node name="player_warrior" type="Node2D" unique_id=515889676]
+script = ExtResource("1_hw5gb")
+Health = 24
+Initiative = 5
+Abilities = Array[ExtResource("2_sd31d")]([ExtResource("3_edkkl")])
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1317937094]
+texture = ExtResource("4_nryn0")
