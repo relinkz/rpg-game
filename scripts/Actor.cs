@@ -7,10 +7,11 @@ public partial class Actor : Node2D
 	public int Health { get; set; } = 100;
 	[Export]
 	public int Initiative { get; set; } = 10;
-	[Export]
-	public int[] basePhysicalDamage { get; set; } = { 1, 6 };
 
-	private Vector2 originalPosition;
+	[Export]
+	public Godot.Collections.Array<AbilityData> Abilities = new Godot.Collections.Array<AbilityData>();
+
+	private Vector2 _originalPosition;
 	private Tween _idleTween;
 	private HealthBar _healthBar;
 
@@ -22,7 +23,7 @@ public partial class Actor : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		originalPosition = Position;
+		_originalPosition = Position;
 
 		// Initialize health bar
 		var sprite = GetNode<Sprite2D>("Sprite2D");
@@ -53,7 +54,7 @@ public partial class Actor : Node2D
 		tween.TweenProperty(this, "position", targetPosition, attackSpeed);
 
 		// Bounce back to original position
-		tween.TweenProperty(this, "position", originalPosition, returnSpeed);
+		tween.TweenProperty(this, "position", _originalPosition, returnSpeed);
 
 	}
 
@@ -84,10 +85,10 @@ public partial class Actor : Node2D
 		float swaySpeed = 0.8f;  // Duration per sway swing
 
 		// Sway up
-		_idleTween.TweenProperty(this, "position:y", originalPosition.Y - swayAmount, swaySpeed);
+		_idleTween.TweenProperty(this, "position:y", _originalPosition.Y - swayAmount, swaySpeed);
 
 		// Sway down
-		_idleTween.TweenProperty(this, "position:y", originalPosition.Y + swayAmount, swaySpeed);
+		_idleTween.TweenProperty(this, "position:y", _originalPosition.Y + swayAmount, swaySpeed);
 	}
 
 	public virtual void EndTurn()
@@ -99,7 +100,7 @@ public partial class Actor : Node2D
 		{
 			_idleTween.Kill();
 		}
-		Position = originalPosition;
+		Position = _originalPosition;
 
 		EmitSignal(SignalName.TurnEnded);
 	}

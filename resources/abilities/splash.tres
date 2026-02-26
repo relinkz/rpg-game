@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://dghq7dkibwa45"]
+
+[ext_resource type="Script" uid="uid://bcx38yy83rwfd" path="res://scripts/AbilityData.cs" id="1_a0d4c"]
+
+[resource]
+script = ExtResource("1_a0d4c")
+Name = "splash"
+Damage = PackedInt32Array(1, 3)
+Tooltip = "A putrid blob arcs through the air, clinging like tar. Armor crumbles where it sticks (-1), while violent chemical reactions deal 1d3 damage."
+metadata/_custom_type_script = "uid://bcx38yy83rwfd"

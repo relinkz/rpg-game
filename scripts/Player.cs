@@ -5,8 +5,7 @@ public partial class Player : Actor
     // Player-specific properties go here
     [Export]
     public string PlayerClass { get; set; } = "Rogue";
-    [Export]
-    public Godot.Collections.Array<AbilityData> Abilities = new Godot.Collections.Array<AbilityData>();
+
     public override void _Ready()
     {
         base._Ready();

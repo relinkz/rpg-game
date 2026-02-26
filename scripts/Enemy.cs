@@ -26,6 +26,7 @@ public partial class Enemy : Actor
         if (target != null)
         {
             base.playPhysicalAttackAnimation(target);
+            base.Abilities[0].Execute(this, target);  // Assuming the enemy uses the first ability for now
         }
 
         EndTurn();

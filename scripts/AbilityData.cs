@@ -13,11 +13,13 @@ public partial class AbilityData : Resource
     public int[] DodgeChance { get; set; } = { 0, 0, 0 }; // which dice to roll for dodge chance (e.g., 0d0 for no dodge), last digit is nr of turn buff last
     [Export]
     public int[] Armor { get; set; } = { 0, 0 }; // first digit is armor value, second is nr of turn buff last
+
+    [Export]
     public string Tooltip { get; set; } = "Additional information about the ability goes here.";
     [Export]
     public Texture2D Icon;
 
-    public virtual void Execute(Player user, Actor target)
+    public virtual void Execute(Actor user, Actor target)
     {
         GD.Print($"{user.Name} used {Name}");
 

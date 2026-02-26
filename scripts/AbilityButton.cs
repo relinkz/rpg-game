@@ -3,10 +3,10 @@ using Godot;
 public partial class AbilityButton : Button
 {
     private AbilityData ability;
-    private Player owner;
+    private Actor owner;
     private Actor _target;
 
-    public void Setup(AbilityData abilityData, Player player)
+    public void Setup(AbilityData abilityData, Actor player)
     {
         ability = abilityData;
         owner = player;
