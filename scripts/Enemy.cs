@@ -25,7 +25,7 @@ public partial class Enemy : Actor
         var target = GetTree().GetFirstNodeInGroup("Player") as Player;
         if (target != null)
         {
-            base.attack(target);
+            base.playPhysicalAttackAnimation(target);
         }
 
         EndTurn();

@@ -4,22 +4,24 @@ public partial class AbilityButton : Button
 {
     private AbilityData ability;
     private Player owner;
+    private Actor _target;
 
     public void Setup(AbilityData abilityData, Player player)
     {
         ability = abilityData;
         owner = player;
 
-        Text = ability.Name;
         Icon = ability.Icon;
         TooltipText = ability.Tooltip;
+
+        _target = GetNode<Actor>("/root/BattleScene/TurnHandler/enemy_slime"); // add targeting logic
     }
 
     private void OnPressed()
     {
         if (ability != null)
         {
-            ability.Execute(owner, null); // Targeting logic can be added here
+            ability.Execute(owner, _target); // Targeting logic can be added here
         }
     }
 

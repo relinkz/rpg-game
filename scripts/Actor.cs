@@ -39,11 +39,8 @@ public partial class Actor : Node2D
 	{
 	}
 
-	public void attack(Actor target)
+	public void playPhysicalAttackAnimation(Actor target)
 	{
-		var dice = new Dice();
-		int damage = dice.Roll(basePhysicalDamage[0], basePhysicalDamage[1]);
-
 		// Create attack animation tween
 		var tween = CreateTween();
 		tween.SetTrans(Tween.TransitionType.Linear);
@@ -58,8 +55,6 @@ public partial class Actor : Node2D
 		// Bounce back to original position
 		tween.TweenProperty(this, "position", originalPosition, returnSpeed);
 
-		// Deal damage after animation completes
-		tween.TweenCallback(Callable.From(() => target.TakeDamage(damage)));
 	}
 
 	public void TakeDamage(int damage)

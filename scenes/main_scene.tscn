@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://efw8spa15ubr" path="res://scenes/Enemies/Slime.tscn" id="4_18nlu"]
 [ext_resource type="PackedScene" uid="uid://bhh87dagjnxbl" path="res://scenes/ActionBar.tscn" id="5_rt2n2"]
 [ext_resource type="Texture2D" uid="uid://c028cgdc352dd" path="res://images/battleback1.png" id="6_rt2n2"]
+[ext_resource type="PackedScene" uid="uid://cdxkd80kjalsv" path="res://scenes/UiTurn.tscn" id="7_c16ls"]
 
 [node name="BattleScene" type="Node2D" unique_id=992927828]
 script = ExtResource("1_gubc5")
@@ -24,9 +25,12 @@ Initiative = 5
 basePhysicalDamage = PackedInt32Array(1, 4)
 
 [node name="ActionBar" parent="TurnHandler" unique_id=1943839177 instance=ExtResource("5_rt2n2")]
+pivot_offset = Vector2(0, -250)
 
 [node name="Battleback1" type="Sprite2D" parent="." unique_id=417684645]
 z_index = -2
 position = Vector2(974.99994, 536.00006)
 scale = Vector2(1.7866849, 1.7516104)
 texture = ExtResource("6_rt2n2")
+
+[node name="TurnUiCtrl" parent="." unique_id=1414187168 instance=ExtResource("7_c16ls")]

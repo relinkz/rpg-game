@@ -20,5 +20,11 @@ public partial class AbilityData : Resource
     public virtual void Execute(Player user, Actor target)
     {
         GD.Print($"{user.Name} used {Name}");
+
+        Dice dice = new Dice();
+        int damage = dice.Roll(Damage[0], Damage[1]);
+        user.playPhysicalAttackAnimation(target);
+        target.TakeDamage(damage);
+        user.EndTurn();
     }
 }

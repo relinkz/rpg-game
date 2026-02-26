@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cdxkd80kjalsv"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wusub"]
+font_size = 40
+
+[node name="TurnUiCtrl" type="Control" unique_id=1414187168]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TurnLabel" type="Label" parent="." unique_id=1395388789]
+layout_mode = 0
+offset_right = 245.0
+offset_bottom = 79.0
+text = "Turn: "
+label_settings = SubResource("LabelSettings_wusub")

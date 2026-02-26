@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 public partial class TurnHandler : Node
 {
@@ -10,14 +9,15 @@ public partial class TurnHandler : Node
 	private int _roundCounter = 0;
 
 	private ActionBar _actionBar;
+	private Label _turnLabel;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		_turnQueue = new Queue<Actor>();
 
-
 		_actionBar = GetNode<ActionBar>("../TurnHandler/ActionBar");
+		_turnLabel = GetNode<Label>("../TurnUiCtrl/TurnLabel");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -33,7 +33,7 @@ public partial class TurnHandler : Node
 		var enemy = FindChild("enemy_*", owned: false);
 		if (enemy != null && enemy is Actor target)
 		{
-			_currentEntity.attack(target);
+			_currentEntity.playPhysicalAttackAnimation(target);
 		}
 		else
 		{
@@ -85,7 +85,7 @@ public partial class TurnHandler : Node
 		}
 
 		GD.Print($"Round {_roundCounter++}");
-
+		_turnLabel.Text = $"Round {_roundCounter}";
 	}
 
 	private void StartNextTurn()
@@ -100,7 +100,9 @@ public partial class TurnHandler : Node
 		_currentEntity.OnTurnStart();
 		GD.Print($"{_currentEntity.Name}'s turn!");
 		if (_currentEntity is Player)
+		{
 			_actionBar.SetCharacter((Player)_currentEntity);
+		}
 	}
 
 	private void OnActorTurnEnded()
