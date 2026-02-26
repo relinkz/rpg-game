@@ -62,7 +62,6 @@ public partial class Actor : Node2D
 	{
 		Health -= damage;
 		_healthBar?.UpdateHealth(Health);
-		GD.Print($"{Name} takes {damage} damage! Remaining health: {Health}");
 		if (Health <= 0)
 		{
 			GD.Print($"{Name} has been defeated!");

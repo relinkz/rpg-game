@@ -14,12 +14,10 @@ public partial class Player : Actor
     public override void OnTurnStart()
     {
         base.OnTurnStart();
-        GD.Print($"{Name} ({PlayerClass}) starts their turn");
     }
 
     public override void EndTurn()
     {
-        GD.Print($"{Name} ends their turn");
         base.EndTurn();
         // Add player-specific end turn logic here
     }

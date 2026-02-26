@@ -67,6 +67,5 @@ public partial class HealthBar : Node2D
 
         // Apply color using Modulate as a fallback
         _progressBar.Modulate = barColor;
-        GD.Print($"Health: {currentHealth}/{_maxHealth} ({healthPercent:F1}%) - Color: {barColor}");
     }
 }

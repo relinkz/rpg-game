@@ -6,4 +6,5 @@
 [resource]
 script = ExtResource("2_pihuk")
 Name = "Stab"
+Tooltip = "Stab the target for base 1d4 physical damage"
 Icon = ExtResource("1_f0shw")

@@ -8,6 +8,6 @@ script = ExtResource("1_bxiw8")
 Name = "nimble"
 Damage = PackedInt32Array(0, 0)
 DodgeChance = PackedInt32Array(1, 2, 2)
-Tooltip = "Goo projectile dealing base 1d3 damage"
+Tooltip = ""
 Icon = ExtResource("1_sy5nw")
 metadata/_custom_type_script = "uid://bcx38yy83rwfd"

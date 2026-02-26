@@ -13,7 +13,6 @@ public partial class Enemy : Actor
     public override void OnTurnStart()
     {
         base.OnTurnStart();
-        GD.Print($"{Name} ({EnemyType}) starts their turn");
 
         // Delay the action without blocking the game
         var timer = GetTree().CreateTimer(ThinkingTime);
@@ -34,7 +33,6 @@ public partial class Enemy : Actor
 
     public override void EndTurn()
     {
-        GD.Print($"{Name} ends their turn");
         base.EndTurn();
         // Add enemy-specific end turn logic here
     }

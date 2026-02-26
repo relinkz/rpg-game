@@ -2,10 +2,13 @@
 
 [ext_resource type="Script" uid="uid://dtnbjq2uww67m" path="res://scripts/Enemy.cs" id="1_a67r8"]
 [ext_resource type="Texture2D" uid="uid://bldbwehnqgqn1" path="res://images/slime.png" id="2_a67r8"]
+[ext_resource type="Script" uid="uid://bcx38yy83rwfd" path="res://scripts/AbilityData.cs" id="2_vu006"]
+[ext_resource type="Resource" uid="uid://dghq7dkibwa45" path="res://resources/abilities/splash.tres" id="3_oc5et"]
 
 [node name="Player" type="Node2D" unique_id=515889676]
 script = ExtResource("1_a67r8")
 Health = 8
+Abilities = Array[ExtResource("2_vu006")]([ExtResource("3_oc5et")])
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1317937094]
 texture = ExtResource("2_a67r8")

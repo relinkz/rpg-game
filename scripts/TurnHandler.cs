@@ -66,7 +66,6 @@ public partial class TurnHandler : Node
 
 	private void BuildInitiativeOrder()
 	{
-		GD.Print("Fetching entities for new round...");
 		var actors = new List<Actor>();
 		foreach (var child in GetChildren())
 		{
@@ -84,7 +83,6 @@ public partial class TurnHandler : Node
 			_turnQueue.Enqueue(actor);
 		}
 
-		GD.Print($"Round {_roundCounter++}");
 		_turnLabel.Text = $"Round {_roundCounter}";
 	}
 
@@ -98,7 +96,6 @@ public partial class TurnHandler : Node
 		_currentEntity = _turnQueue.Dequeue();
 		_currentEntity.TurnEnded += OnActorTurnEnded;
 		_currentEntity.OnTurnStart();
-		GD.Print($"{_currentEntity.Name}'s turn!");
 		if (_currentEntity is Player)
 		{
 			_actionBar.SetCharacter((Player)_currentEntity);
