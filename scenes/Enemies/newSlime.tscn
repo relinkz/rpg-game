@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bajb35jsrynmm"]
+
+[ext_resource type="Script" uid="uid://dtnbjq2uww67m" path="res://scripts/Enemy.cs" id="1_ml32j"]
+[ext_resource type="Script" uid="uid://bcx38yy83rwfd" path="res://scripts/AbilityData.cs" id="2_57wb5"]
+[ext_resource type="Texture2D" uid="uid://bldbwehnqgqn1" path="res://images/slime.png" id="2_amsbo"]
+[ext_resource type="Resource" uid="uid://dghq7dkibwa45" path="res://resources/abilities/splash.tres" id="3_r8k83"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_57wb5"]
+size = Vector2(253, 251)
+
+[node name="NewSlime" type="Node2D" unique_id=370433071]
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1405763362]
+script = ExtResource("1_ml32j")
+Health = 8
+Initiative = 8
+Abilities = Array[ExtResource("2_57wb5")]([ExtResource("3_r8k83")])
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D" unique_id=1043422661]
+texture = ExtResource("2_amsbo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1317592900]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_57wb5")

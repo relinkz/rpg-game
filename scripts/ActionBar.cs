@@ -15,7 +15,7 @@ public partial class ActionBar : Control
         );
     }
 
-    public void SetCharacter(Player player)
+    public void PlayerAbilitySelect(Player player)
     {
         currentPlayer = player;
 

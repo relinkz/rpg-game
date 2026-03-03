@@ -10,6 +10,12 @@ public partial class Enemy : Actor
     [Export]
     public float ThinkingTime { get; set; } = 1.5f;  // Seconds the enemy "thinks"
 
+    public override void _Ready()
+    {
+        base._Ready();
+        AddToGroup("Enemy");
+    }
+
     public override void OnTurnStart()
     {
         base.OnTurnStart();
@@ -21,7 +27,7 @@ public partial class Enemy : Actor
 
     private void ExecuteAction()
     {
-        var target = GetTree().GetFirstNodeInGroup("Player") as Player;
+        Player target = BattleActors.GetInstance().getRandomPlayer();
         if (target != null)
         {
             base.playPhysicalAttackAnimation(target);
@@ -36,4 +42,5 @@ public partial class Enemy : Actor
         base.EndTurn();
         // Add enemy-specific end turn logic here
     }
+
 }

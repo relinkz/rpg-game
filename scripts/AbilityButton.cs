@@ -4,7 +4,6 @@ public partial class AbilityButton : Button
 {
     private AbilityData ability;
     private Actor owner;
-    private Actor _target;
 
     public void Setup(AbilityData abilityData, Actor player)
     {
@@ -13,15 +12,39 @@ public partial class AbilityButton : Button
 
         Icon = ability.Icon;
         TooltipText = ability.Tooltip;
-
-        _target = GetNode<Actor>("/root/BattleScene/TurnHandler/enemy_slime"); // add targeting logic
     }
 
     private void OnPressed()
     {
+        var targetSelector = BattleActors.GetInstance();
+        Actor target = targetSelector.getRandomEnemy();
+
         if (ability != null)
         {
-            ability.Execute(owner, _target); // Targeting logic can be added here
+            switch (ability.TargetType)
+            {
+                case TargetType.singleEnemy:
+                    // Targeting logic for single enemy can be added here
+                    target = targetSelector.getCurrentTarget();
+                    GD.Print("hello?");
+                    break;
+                case TargetType.allEnemies:
+                    // Targeting logic for all enemies can be added here
+                    break;
+                case TargetType.singleAlly:
+                    // Targeting logic for ally can be added here
+                    break;
+                case TargetType.allAllies:
+                    // Targeting logic for all allies can be added here
+                    break;
+                case TargetType.allActors:
+                    break;
+                case TargetType.self:
+                    target = owner; // Target self
+                    break;
+            }
+
+            ability.Execute(owner, target); // Targeting logic can be added here
         }
     }
 

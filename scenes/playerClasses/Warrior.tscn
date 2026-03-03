@@ -5,11 +5,19 @@
 [ext_resource type="Resource" uid="uid://c7jdrle042ene" path="res://resources/abilities/stab.tres" id="3_edkkl"]
 [ext_resource type="Texture2D" uid="uid://bmg24yyjcj8yb" path="res://images/128/axe.png" id="4_nryn0"]
 
-[node name="player_warrior" type="Node2D" unique_id=515889676]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_clf32"]
+size = Vector2(97, 100)
+
+[node name="player" type="Node2D" unique_id=515889676]
+
+[node name="player_warrior" type="Area2D" parent="." unique_id=1632730493]
 script = ExtResource("1_hw5gb")
-Health = 24
-Initiative = 5
+Health = 18
 Abilities = Array[ExtResource("2_sd31d")]([ExtResource("3_edkkl")])
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1317937094]
+[node name="Sprite2D" type="Sprite2D" parent="player_warrior" unique_id=1317937094]
 texture = ExtResource("4_nryn0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player_warrior" unique_id=1293760123]
+position = Vector2(-3.5, -1)
+shape = SubResource("RectangleShape2D_clf32")

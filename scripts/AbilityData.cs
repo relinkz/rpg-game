@@ -7,6 +7,18 @@ public enum DamageType
     True
 }
 
+public enum TargetType
+{
+    singleEnemy,
+    multipleEnemies,
+    allEnemies,
+    singleAlly,
+    multipleAllies,
+    allAllies,
+    allActors,
+    self
+}
+
 [GlobalClass]
 public partial class AbilityData : Resource
 {
@@ -17,6 +29,9 @@ public partial class AbilityData : Resource
 
     [Export]
     public DamageType Type = DamageType.Physical;
+
+    [Export]
+    public TargetType TargetType = TargetType.singleEnemy;
 
     [Export]
     public int[] Healing { get; set; } = { 0, 0 }; // which dice to roll for healing (e.g., 0d0 for no healing) 

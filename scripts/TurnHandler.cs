@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 using System.Collections.Generic;
 public partial class TurnHandler : Node
 {
@@ -67,22 +68,54 @@ public partial class TurnHandler : Node
 	private void BuildInitiativeOrder()
 	{
 		var actors = new List<Actor>();
-		foreach (var child in GetChildren())
+		var Enemies = GetTree().GetNodesInGroup("Enemy");
+		Array<Enemy> enemyArray = new Array<Enemy>();
+		Array<Player> playerArray = new Array<Player>();
+
+		foreach (Node node in Enemies)
 		{
-			if (child is Actor actor)
+			Actor typedNode = node as Actor;
+			if (typedNode != null)
 			{
-				actors.Add(actor);
+				actors.Add(typedNode);
+			}
+			Enemy enemyNode = node as Enemy;
+			if (enemyNode != null)
+			{
+				enemyArray.Add(enemyNode);
 			}
 		}
 
+		var Players = GetTree().GetNodesInGroup("Player");
+		foreach (Node node in Players)
+		{
+			Actor typedNode = node as Actor;
+			if (typedNode != null)
+			{
+				actors.Add(typedNode);
+			}
+			Player playerNode = node as Player;
+			if (playerNode != null)
+			{
+				playerArray.Add(playerNode);
+			}
+		}
+
+		GD.Print("Found " + actors.Count + " actors for initiative order.");
+
 		// Sort by initiative (highest first)
 		actors.Sort((a, b) => b.Initiative.CompareTo(a.Initiative));
-
 		foreach (var actor in actors)
 		{
 			_turnQueue.Enqueue(actor);
 		}
 
+		var targetSelector = BattleActors.GetInstance();
+		targetSelector.setPlayers(playerArray);
+		targetSelector.setEnemies(enemyArray);
+		GD.Print("BattleActors singleton initialized with " + playerArray.Count + " players and " + enemyArray.Count + " enemies.");
+
+		_roundCounter++;
 		_turnLabel.Text = $"Round {_roundCounter}";
 	}
 
@@ -93,18 +126,33 @@ public partial class TurnHandler : Node
 			BuildInitiativeOrder();
 		}
 
+		if (_turnQueue.Peek().Health <= 0)
+		{
+			GD.Print("Skipping defeated actor:");
+			_turnQueue.Dequeue(); // Remove the defeated actor
+			StartNextTurn(); // Try again
+			return;
+		}
+
 		_currentEntity = _turnQueue.Dequeue();
 		_currentEntity.TurnEnded += OnActorTurnEnded;
 		_currentEntity.OnTurnStart();
+
 		if (_currentEntity is Player)
 		{
-			_actionBar.SetCharacter((Player)_currentEntity);
+			_actionBar.PlayerAbilitySelect((Player)_currentEntity);
+			_actionBar.Show();
+		}
+		else
+		{
+			_actionBar.Hide();
 		}
 	}
 
 	private void OnActorTurnEnded()
 	{
 		_currentEntity.TurnEnded -= OnActorTurnEnded;
+
 		StartNextTurn();
 	}
 }

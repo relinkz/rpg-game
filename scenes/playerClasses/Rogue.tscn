@@ -6,10 +6,20 @@
 [ext_resource type="Resource" uid="uid://cn72e8yt6rrjp" path="res://resources/abilities/nimble.tres" id="4_00kp1"]
 [ext_resource type="Texture2D" uid="uid://cm2w5xhj0wsvk" path="res://images/128/dagger.png" id="5_q5qh6"]
 
-[node name="player_rogue" type="Node2D" unique_id=515889676]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_clf32"]
+size = Vector2(50, 58)
+
+[node name="player" type="Node2D" unique_id=515889676]
+
+[node name="player_rogue" type="Area2D" parent="." unique_id=1632730493]
 script = ExtResource("1_clf32")
-Health = 16
+Health = 18
+Initiative = 12
 Abilities = Array[ExtResource("2_3tv31")]([ExtResource("3_q5qh6"), ExtResource("4_00kp1")])
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1317937094]
+[node name="Sprite2D" type="Sprite2D" parent="player_rogue" unique_id=1317937094]
 texture = ExtResource("5_q5qh6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player_rogue" unique_id=1293760123]
+position = Vector2(-1, 8)
+shape = SubResource("RectangleShape2D_clf32")

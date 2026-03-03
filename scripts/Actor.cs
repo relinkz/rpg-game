@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public partial class Actor : Node2D
+public partial class Actor : Area2D
 {
 	[Export]
 	public int Health { get; set; } = 100;
@@ -14,6 +14,7 @@ public partial class Actor : Node2D
 	private Vector2 _originalPosition;
 	private Tween _idleTween;
 	private HealthBar _healthBar;
+	private Button _targetButton;
 
 	bool myTurn = false;
 
@@ -23,7 +24,7 @@ public partial class Actor : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_originalPosition = Position;
+		_originalPosition = GlobalPosition;
 
 		// Initialize health bar
 		var sprite = GetNode<Sprite2D>("Sprite2D");
@@ -34,6 +35,8 @@ public partial class Actor : Node2D
 		{
 			_healthBar.Initialize(Health, sprite);
 		}
+
+		InputEvent += OnInputEvent;
 	}
 
 	public override void _Process(double delta)
@@ -46,16 +49,15 @@ public partial class Actor : Node2D
 		var tween = CreateTween();
 		tween.SetTrans(Tween.TransitionType.Linear);
 
-		Vector2 targetPosition = target.Position;
+		Vector2 targetPosition = target.GlobalPosition;
 		float attackSpeed = 0.15f;  // Duration of lunge forward
-		float returnSpeed = 0.15f;  // Duration of bounce back
+		float returnSpeed = 0.15f;  // Duration of bounce back	
 
 		// Lunge toward target
-		tween.TweenProperty(this, "position", targetPosition, attackSpeed);
+		tween.TweenProperty(this, "global_position", targetPosition, attackSpeed);
 
 		// Bounce back to original position
-		tween.TweenProperty(this, "position", _originalPosition, returnSpeed);
-
+		tween.TweenProperty(this, "global_position", _originalPosition, returnSpeed);
 	}
 
 	public void TakeDamage(int damage)
@@ -65,6 +67,7 @@ public partial class Actor : Node2D
 		if (Health <= 0)
 		{
 			GD.Print($"{Name} has been defeated!");
+			Hide();
 			QueueFree();
 		}
 
@@ -84,10 +87,10 @@ public partial class Actor : Node2D
 		float swaySpeed = 0.8f;  // Duration per sway swing
 
 		// Sway up
-		_idleTween.TweenProperty(this, "position:y", _originalPosition.Y - swayAmount, swaySpeed);
+		_idleTween.TweenProperty(this, "global_position:y", _originalPosition.Y - swayAmount, swaySpeed);
 
 		// Sway down
-		_idleTween.TweenProperty(this, "position:y", _originalPosition.Y + swayAmount, swaySpeed);
+		_idleTween.TweenProperty(this, "global_position:y", _originalPosition.Y + swayAmount, swaySpeed);
 	}
 
 	public virtual void EndTurn()
@@ -99,8 +102,18 @@ public partial class Actor : Node2D
 		{
 			_idleTween.Kill();
 		}
-		Position = _originalPosition;
+		GlobalPosition = _originalPosition;
 
 		EmitSignal(SignalName.TurnEnded);
 	}
+
+	private void OnInputEvent(Node viewport, InputEvent @event, long shapeIdx)
+	{
+		if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+		{
+			GD.Print("Player selected: " + Name);
+			BattleActors.GetInstance().setPlayerTarget(this);
+		}
+	}
+
 }

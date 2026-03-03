@@ -7,6 +7,7 @@
 script = ExtResource("1_bxiw8")
 Name = "nimble"
 Damage = PackedInt32Array(0, 0)
+TargetType = 7
 DodgeChance = PackedInt32Array(1, 2, 2)
 Tooltip = ""
 Icon = ExtResource("1_sy5nw")
